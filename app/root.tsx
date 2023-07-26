@@ -34,9 +34,9 @@ export default function App() {
  */
 
 // root.tsx
-import React, { useContext, useEffect } from "react";
-import { withEmotionCache } from "@emotion/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import { withEmotionCache } from "@emotion/react";
+import type { LinksFunction, V2_MetaFunction } from "@remix-run/node"; // Depends on the runtime you choose
 import {
   Links,
   LiveReload,
@@ -45,18 +45,23 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { LinksFunction, V2_MetaFunction } from "@remix-run/node"; // Depends on the runtime you choose
-import styles from './styles/global.css';
+import React, { useContext, useEffect } from "react";
+import styles from "./styles/global.css";
 
-import { ServerStyleContext, ClientStyleContext } from "./context";
+import { LoaderArgs, json } from "@remix-run/node";
+import { ClientStyleContext, ServerStyleContext } from "./context";
+import { getUser } from "./services/user.server";
 import myTheme from "./styles/myTheme";
 
-export const meta: V2_MetaFunction = () => ([{
-  title: "Crowdfarming - Agrotai"
-},{
-  charset: "utf-8",
-  viewport: "width=device-width,initial-scale=1",
-}]);
+export const meta: V2_MetaFunction = () => [
+  {
+    title: "Crowdfarming - Agrotai",
+  },
+  {
+    charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1",
+  },
+];
 
 export let links: LinksFunction = () => {
   return [
@@ -68,8 +73,8 @@ export let links: LinksFunction = () => {
     },
     {
       rel: "stylesheet",
-      href: styles
-    }
+      href: styles,
+    },
   ];
 };
 
@@ -120,6 +125,12 @@ const Document = withEmotionCache(
   }
 );
 
+export const loader = async ({ request }: LoaderArgs) => {
+  return json({
+    user: await getUser(request),
+  });
+};
+
 export default function App() {
   return (
     <Document>
@@ -127,5 +138,5 @@ export default function App() {
         <Outlet />
       </ChakraProvider>
     </Document>
-  )
+  );
 }

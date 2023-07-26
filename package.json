@@ -14,17 +14,23 @@
     "@emotion/styled": "^11",
     "@fontsource/barlow": "^5.0.5",
     "@fontsource/dm-sans": "^5.0.5",
+    "@hookform/resolvers": "^3.1.1",
     "@netlify/functions": "^1.4.0",
     "@remix-run/css-bundle": "^1.19.1",
     "@remix-run/netlify": "^1.19.1",
     "@remix-run/node": "^1.19.1",
     "@remix-run/react": "^1.19.1",
     "@tabler/icons-react": "^2.29.0",
+    "axios": "^1.4.0",
     "cross-env": "^7.0.3",
+    "envalid": "^7.3.1",
     "framer-motion": "^6",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.2",
+    "remix-hook-form": "^1.1.2",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.19.1",
@@ -33,6 +39,7 @@
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.38.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "typescript": "^5.0.4"
   },
   "engines": {
