@@ -1,10 +1,11 @@
 import { Box, Heading } from "@chakra-ui/react";
-import { useOptionalUser } from "~/utils/utils";
+import { LoaderArgs, json } from "@remix-run/node";
+
+export const loader = async ({ request }: LoaderArgs) => {
+  return json({});
+};
 
 export default function Dashboard() {
-  const user = useOptionalUser();
-  console.log(user);
-
   return (
     <Box>
       <Heading>Dashboard</Heading>

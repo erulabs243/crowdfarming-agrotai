@@ -1,3 +1,4 @@
 import FormHeading from "./FormHeading";
+import Navlink from "./NavLink";
 
-export { FormHeading };
+export { FormHeading, Navlink };

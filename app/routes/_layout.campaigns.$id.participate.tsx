@@ -1,9 +1,9 @@
 import { Box, Heading } from "@chakra-ui/react";
 
-export default function Campaigns() {
+export default function JoinCampaign() {
   return (
     <Box>
-      <Heading>Campaigns</Heading>
+      <Heading>Join campaign</Heading>
     </Box>
   );
 }

@@ -15,15 +15,55 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "@remix-run/react";
+import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
+import { Form, useNavigate } from "@remix-run/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { useState } from "react";
-import { useRemixForm } from "remix-hook-form";
+import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { FormHeading } from "~/components";
 import {
   registrationInitialValues,
   registrationSchema,
+  registrationType,
 } from "~/schemas/forms/register";
+import { createUserSession, getUserId } from "~/services/session.server";
+import { registerUser } from "~/services/user.server";
+
+const resolver = yupResolver<registrationType>(registrationSchema);
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const userId = await getUserId(request);
+
+  if (userId) return redirect("/dashboard");
+  return json({});
+};
+
+//TODO display error messages
+
+export const action = async ({ request }: ActionArgs) => {
+  const { data, errors } = await getValidatedFormData(request, resolver);
+
+  if (errors) {
+    console.log(errors);
+    return json(errors);
+  }
+
+  try {
+    const registrationResponse = await registerUser(data as registrationType);
+    if (registrationResponse.statusText === "OK") {
+      return createUserSession({
+        request: request,
+        user: registrationResponse.data.user.id,
+        jwt: registrationResponse.data.jwt,
+      });
+    }
+
+    return null;
+  } catch (err) {
+    console.error(err);
+    return json(err);
+  }
+};
 
 export default function Register() {
   const navigate = useNavigate();
@@ -61,7 +101,7 @@ export default function Register() {
             subheading="Vous n'êtes toujours pas membre ? Créez un compte !"
           />
 
-          <form
+          <Form
             method="post"
             onSubmit={handleSubmit}>
             <Stack direction="column">
@@ -229,7 +269,7 @@ export default function Register() {
                 Se connecter avec Google
               </Button>
             </Stack>
-          </form>
+          </Form>
         </Box>
       </Stack>
     </Center>

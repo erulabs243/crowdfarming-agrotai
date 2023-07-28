@@ -1,6 +1,7 @@
 import { redirect } from "@remix-run/node";
 import axios from "axios";
 import { GetMeResponse } from "~/models/user.model";
+import { registrationType } from "~/schemas/forms/register";
 import env from "./environment.server";
 import { getJWTToken, getUserId, logout } from "./session.server";
 
@@ -45,4 +46,19 @@ export const requireUserId = async (
   }
 
   return userId;
+};
+
+export const registerUser = async (user: registrationType) => {
+  const res = await axios.post(
+    "http://localhost:1337/api/auth/local/register",
+    {
+      fullName: user.firstName + " " + user.lastName,
+      username: user.username,
+      email: user.email,
+      gender: user.gender,
+      password: user.password,
+    }
+  );
+
+  return res;
 };
