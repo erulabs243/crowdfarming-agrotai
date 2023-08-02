@@ -1,4 +1,5 @@
 import {
+  GetRegistrationWithCampaign,
   GetRegistrationsWithCampaign,
   RegistrationWithCampaign,
 } from "~/schemas/propstypes";
@@ -18,8 +19,9 @@ export const getRegistrations = async (
       },
       params: {
         populate: {
+          populate: ["campaign"],
           campaign: {
-            populate: ["products"],
+            populate: ["products", "image"],
           },
         },
         filters: {
@@ -66,6 +68,33 @@ export const getRegistrationsByProduct = async (
                 $eq: product,
               },
             },
+          },
+        },
+      },
+    });
+
+  if (statusText === "OK") return data.data;
+  return;
+};
+
+export const getRegistrationOnCampaign = async (
+  campaign: number,
+  request: Request
+): Promise<RegistrationWithCampaign | undefined> => {
+  const jwt = await getJWTToken(request);
+  const user = await getUserId(request);
+
+  const { data, statusText } =
+    await authenticated.get<GetRegistrationWithCampaign>("/registrations", {
+      headers: { Authorization: `Bearer ${jwt}` },
+      params: {
+        populate: ["campaign"],
+        filters: {
+          users_permissions_user: {
+            id: { $eq: user },
+          },
+          campaign: {
+            id: { $eq: campaign },
           },
         },
       },

@@ -88,6 +88,10 @@ export type RegistrationWithCampaign = {
   };
 } & Registration;
 
+export type GetRegistrationWithCampaign = {
+  data: RegistrationWithCampaign;
+};
+
 export type GetRegistrationsWithCampaign = {
   data: RegistrationWithCampaign[];
 };

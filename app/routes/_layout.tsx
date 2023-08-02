@@ -32,7 +32,7 @@ import { useOptionalUser } from "~/utils/utils";
 
 const navbarLinks: Array<NavbarLinksProps> = [
   {
-    label: "Accuteil",
+    label: "Accueil",
     uri: "/",
     isButton: false,
   },
@@ -44,11 +44,6 @@ const navbarLinks: Array<NavbarLinksProps> = [
   {
     label: "Produits",
     uri: "/products",
-    isButton: false,
-  },
-  {
-    label: "Crowdfarming",
-    uri: "/crowdfarming",
     isButton: false,
   },
 ];
@@ -140,7 +135,8 @@ export default function Layout() {
                         size="sm"
                         w="full"
                         justifyContent="flex-start"
-                        leftIcon={<Icon as={IconTable} />}>
+                        leftIcon={<Icon as={IconTable} />}
+                        onClick={() => navigate(`/me/campaigns`)}>
                         Mes campagnes
                       </Button>
                     </MenuItem>

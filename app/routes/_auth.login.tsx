@@ -13,8 +13,19 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
-import { Form, useNavigate, useNavigation } from "@remix-run/react";
+import {
+  ActionArgs,
+  LoaderArgs,
+  LoaderFunction,
+  json,
+  redirect,
+} from "@remix-run/node";
+import {
+  Form,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import { useState } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { FormHeading } from "~/components";
@@ -23,6 +34,7 @@ import {
   loginSchema,
   loginType,
 } from "~/schemas/forms/login";
+import env from "~/services/environment.server";
 import {
   createUserSession,
   getUserId,
@@ -31,10 +43,11 @@ import {
 
 const resolver = yupResolver<loginType>(loginSchema);
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   const userId = await getUserId(request);
+  const host = env.SERVER_HOST;
   if (userId) return redirect("/dashboard");
-  return json({});
+  return json({ host: host });
 };
 
 export const action = async ({ request }: ActionArgs) => {
@@ -69,6 +82,8 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Login() {
   const navigate = useNavigate();
   const { state } = useNavigation();
+
+  const data = useLoaderData();
 
   const [authError, setAuthError] = useState<string>("");
 
