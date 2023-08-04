@@ -8,6 +8,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Icon,
+  Image,
   Input,
   Radio,
   RadioGroup,
@@ -16,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
-import { Form, useNavigate } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { useState } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
@@ -26,6 +27,7 @@ import {
   registrationSchema,
   registrationType,
 } from "~/schemas/forms/register";
+import env from "~/services/environment.server";
 import { createUserSession, getUserId } from "~/services/session.server";
 import { registerUser } from "~/services/user.server";
 
@@ -33,9 +35,10 @@ const resolver = yupResolver<registrationType>(registrationSchema);
 
 export const loader = async ({ request }: LoaderArgs) => {
   const userId = await getUserId(request);
+  const host = env.SERVER_HOST;
 
   if (userId) return redirect("/dashboard");
-  return json({});
+  return json({ host });
 };
 
 //TODO display error messages
@@ -67,6 +70,7 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function Register() {
   const navigate = useNavigate();
+  const data = useLoaderData();
 
   const [authError, setAuthError] = useState<string>("");
 
@@ -92,10 +96,19 @@ export default function Register() {
         mx="auto"
         p={8}
         alignSelf="center"
-        rounded="lg">
+        rounded="lg"
+        bg="gray.50">
+        <Center flex={1}>
+          <Image
+            src={`${data.host}/uploads/logo_comp2_16b5b55f81.png`}
+            w={48}
+          />
+        </Center>
         <Box
           w="50%"
-          p={4}>
+          px={{ base: 4, lg: 12 }}
+          rounded="lg"
+          bg="gray.100">
           <FormHeading
             heading="Inscription"
             subheading="Vous n'êtes toujours pas membre ? Créez un compte !"

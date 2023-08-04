@@ -7,6 +7,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Image,
   Input,
   Link,
   Stack,
@@ -71,7 +72,6 @@ export const action = async ({ request }: ActionArgs) => {
       });
     }
 
-    console.log("Ici, ", data);
     return json(data);
   } catch (err) {
     console.error(err);
@@ -108,10 +108,19 @@ export default function Login() {
         mx="auto"
         p={8}
         alignSelf="center"
-        rounded="lg">
+        rounded="lg"
+        bg="gray.50">
+        <Center flex={1}>
+          <Image
+            src={`${data.host}/uploads/logo_comp2_16b5b55f81.png`}
+            w={48}
+          />
+        </Center>
         <Box
           w="50%"
-          p={4}>
+          px={{ base: 4, lg: 12 }}
+          rounded="lg"
+          bg="gray.100">
           <FormHeading
             heading="Connexion"
             subheading="Accedez à plus d'opportunites"
