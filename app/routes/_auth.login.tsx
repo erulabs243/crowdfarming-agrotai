@@ -23,11 +23,11 @@ import {
 } from "@remix-run/node";
 import {
   Form,
+  useActionData,
   useLoaderData,
   useNavigate,
   useNavigation,
 } from "@remix-run/react";
-import { useState } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { FormHeading } from "~/components";
 import {
@@ -58,8 +58,7 @@ export const action = async ({ request }: ActionArgs) => {
   );
 
   if (errors) {
-    console.error(errors);
-    return json(errors);
+    return json({ error: true });
   }
 
   try {
@@ -72,10 +71,9 @@ export const action = async ({ request }: ActionArgs) => {
       });
     }
 
-    return json(data);
+    return json({ error: true });
   } catch (err) {
-    console.error(err);
-    return json(err);
+    return json({ error: true });
   }
 };
 
@@ -84,8 +82,7 @@ export default function Login() {
   const { state } = useNavigation();
 
   const data = useLoaderData();
-
-  const [authError, setAuthError] = useState<string>("");
+  const actionData = useActionData();
 
   const {
     register,
@@ -130,12 +127,12 @@ export default function Login() {
             method="post"
             onSubmit={handleSubmit}>
             <Stack direction="column">
-              {authError && (
+              {actionData && actionData.error && (
                 <Alert
                   my={2}
                   status="error">
                   <AlertIcon />
-                  {authError}
+                  Adresse e-mail/mot de passe incorrect(s)
                 </Alert>
               )}
               <FormControl
@@ -145,7 +142,7 @@ export default function Login() {
                 <FormLabel
                   fontSize="sm"
                   color="gray.700">
-                  Utilisateur/e-mail
+                  E-mail
                 </FormLabel>
                 <Input
                   type="text"

@@ -13,7 +13,9 @@ import { NavbarLinksProps } from "~/schemas/propstypes";
 function Navlink({ label, uri, isButton }: NavbarLinksProps) {
   if (uri !== "/about")
     return (
-      <Link href={uri}>
+      <Link
+        href={uri}
+        target={uri.startsWith("https://") ? "_blank" : "_self"}>
         <Button
           variant={isButton ? "solid" : "ghost"}
           rounded="lg"

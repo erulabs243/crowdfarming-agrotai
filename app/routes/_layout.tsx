@@ -33,7 +33,7 @@ import { useOptionalUser } from "~/utils/utils";
 const navbarLinks: Array<NavbarLinksProps> = [
   {
     label: "Accueil",
-    uri: "/",
+    uri: "https://agrotai.com",
     isButton: false,
   },
   {

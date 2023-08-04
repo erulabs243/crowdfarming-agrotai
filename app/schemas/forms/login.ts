@@ -1,7 +1,10 @@
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
-  identifier: yup.string().required("Adresse e-mail/utilisateur obligatoire"),
+  identifier: yup
+    .string()
+    .required("Adresse e-mail obligatoire")
+    .email("Adresse e-mail invalide"),
   password: yup.string().required("Mot de passe obligatoire"),
   redirectTo: yup.string(),
 });

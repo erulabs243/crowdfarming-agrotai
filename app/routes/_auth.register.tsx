@@ -17,9 +17,13 @@ import {
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from "@remix-run/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
-import { useState } from "react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { FormHeading } from "~/components";
 import {
@@ -47,8 +51,7 @@ export const action = async ({ request }: ActionArgs) => {
   const { data, errors } = await getValidatedFormData(request, resolver);
 
   if (errors) {
-    console.log(errors);
-    return json(errors);
+    return json({ error: true });
   }
 
   try {
@@ -61,18 +64,16 @@ export const action = async ({ request }: ActionArgs) => {
       });
     }
 
-    return null;
+    return json({ error: true });
   } catch (err) {
-    console.error(err);
-    return json(err);
+    return json({ error: true });
   }
 };
 
 export default function Register() {
   const navigate = useNavigate();
   const data = useLoaderData();
-
-  const [authError, setAuthError] = useState<string>("");
+  const actionData = useActionData();
 
   const {
     register,
@@ -118,12 +119,12 @@ export default function Register() {
             method="post"
             onSubmit={handleSubmit}>
             <Stack direction="column">
-              {authError && (
+              {actionData && actionData.error && (
                 <Alert
                   my={2}
                   status="error">
                   <AlertIcon />
-                  {authError}
+                  Une erreur lors de votre enregistrement. Veuillez réessayer...
                 </Alert>
               )}
               <Stack
