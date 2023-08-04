@@ -58,8 +58,12 @@ export const meta: V2_MetaFunction = () => [
     title: "Crowdfarming - Agrotai",
   },
   {
-    charset: "utf-8",
-    viewport: "width=device-width,initial-scale=1",
+    name: "charset",
+    content: "utf-8",
+  },
+  {
+    name: "viewport",
+    content: "width=device-width,initial-scale=1",
   },
 ];
 
