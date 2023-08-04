@@ -66,6 +66,7 @@ export const action = async ({ request }: ActionArgs) => {
 
     return json({ error: true });
   } catch (err) {
+    console.error(err);
     return json({ error: true });
   }
 };
