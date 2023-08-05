@@ -24,6 +24,7 @@ import {
   useNavigate,
 } from "@remix-run/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
+import { isAxiosError } from "axios";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { FormHeading } from "~/components";
 import {
@@ -66,10 +67,15 @@ export const action = async ({ request }: ActionArgs) => {
 
     console.error(registrationResponse);
 
-    return json({ error: true });
+    return json({
+      error: "Une erreur lors de l'enregistrement de votre compte",
+    });
   } catch (err) {
-    throw err;
-    return json({ error: true });
+    if (isAxiosError(err)) {
+      return json({ error: err.response });
+    }
+
+    return json({ error: err.toString() });
   }
 };
 
@@ -127,7 +133,7 @@ export default function Register() {
                   my={2}
                   status="error">
                   <AlertIcon />
-                  Une erreur lors de votre enregistrement. Veuillez réessayer...
+                  {actionData.error}
                 </Alert>
               )}
               <Stack
