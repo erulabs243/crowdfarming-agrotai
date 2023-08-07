@@ -62,7 +62,7 @@ export default function Index() {
             alignItems="center"
             _hover={{ textDecor: "none" }}>
             <Image
-              src={`${data.host}/uploads/logo_comp2_16b5b55f81.png`}
+              src={`${data.host}/uploads/logo_comp2_f29790d4d6.png`}
               alt="Logo Agrotai"
               w={60}
             />

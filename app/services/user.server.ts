@@ -49,16 +49,13 @@ export const requireUserId = async (
 };
 
 export const registerUser = async (user: registrationType) => {
-  const res = await axios.post(
-    "http://localhost:1337/api/auth/local/register",
-    {
-      fullName: user.firstName + " " + user.lastName,
-      username: user.username,
-      email: user.email,
-      gender: user.gender,
-      password: user.password,
-    }
-  );
+  const res = await axios.post(`${env.SERVER_HOST}/api/auth/local/register`, {
+    fullName: user.firstName + " " + user.lastName,
+    username: user.username,
+    email: user.email,
+    gender: user.gender,
+    password: user.password,
+  });
 
   return res;
 };
