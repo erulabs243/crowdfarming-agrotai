@@ -22,6 +22,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigate,
+  useNavigation,
 } from "@remix-run/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { isAxiosError } from "axios";
@@ -80,6 +81,7 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function Register() {
+  const { state } = useNavigation();
   const navigate = useNavigate();
   const data = useLoaderData();
   const actionData = useActionData();
@@ -263,6 +265,7 @@ export default function Register() {
                 justifyContent="space-between">
                 <Button
                   type="submit"
+                  isLoading={state === "submitting"}
                   colorScheme="green">
                   Créer un compte
                 </Button>
