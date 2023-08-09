@@ -1,10 +1,5 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Box,
-  Button,
   Card,
   CardBody,
   Heading,
@@ -18,6 +13,7 @@ import {
 import { LoaderArgs, LoaderFunction, json } from "@remix-run/node";
 import { useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import { IconPercentage } from "@tabler/icons-react";
+import { EmptyData, Loader } from "~/components";
 import { getRegistrations } from "~/models/registration.server";
 import { RegistrationWithCampaign } from "~/schemas/propstypes";
 import env from "~/services/environment.server";
@@ -46,7 +42,7 @@ export default function MyCampaignPage() {
   return (
     <Box>
       {state === "loading" ? (
-        <Text>Chargement...</Text>
+        <Loader />
       ) : (
         <Box
           w={{ base: "full", lg: "4xl" }}
@@ -54,22 +50,7 @@ export default function MyCampaignPage() {
           my={{ base: 8, lg: 20 }}>
           <Heading>Mes campagnes</Heading>
           {registrations.length <= 0 ? (
-            <Alert
-              status="warning"
-              rounded="lg">
-              <AlertIcon />
-              <Box>
-                <AlertTitle>Aucune campagne</AlertTitle>
-                <AlertDescription>
-                  Vous ne participez à aucune campagne...
-                </AlertDescription>
-                <Button
-                  variant="outline"
-                  onClick={() => navigate("/campaigns")}>
-                  Nos campagnes
-                </Button>
-              </Box>
-            </Alert>
+            <EmptyData model="campaign" />
           ) : (
             <SimpleGrid
               columns={{ base: 1, lg: 2 }}

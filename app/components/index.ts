@@ -1,5 +1,7 @@
+import EmptyData from "./EmptyData";
 import FooterNav from "./FooterNav";
 import FormHeading from "./FormHeading";
+import Loader from "./Loader";
 import Navlink from "./NavLink";
 
-export { FooterNav, FormHeading, Navlink };
+export { EmptyData, FooterNav, FormHeading, Loader, Navlink };

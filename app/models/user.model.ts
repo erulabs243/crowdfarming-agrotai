@@ -9,6 +9,7 @@ export type User = {
   email: string;
   fullName: string;
   confirmed: boolean;
+  gender: string;
   role: Role;
 };
 

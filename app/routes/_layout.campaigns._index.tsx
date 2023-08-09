@@ -6,7 +6,6 @@ import {
   IconButton,
   Table,
   TableContainer,
-  Tag,
   Tbody,
   Td,
   Text,
@@ -18,6 +17,7 @@ import {
 import { LoaderArgs, json } from "@remix-run/node";
 import { useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import { IconEye, IconQuestionMark, IconUserPlus } from "@tabler/icons-react";
+import { Loader } from "~/components";
 import { getCampaigns } from "~/models/campaign.server";
 import { getRegistrations } from "~/models/registration.server";
 import { ICampaign, RegistrationWithCampaign } from "~/schemas/propstypes";
@@ -41,13 +41,13 @@ export default function Campaigns() {
   return (
     <Box>
       {state === "loading" ? (
-        <Text>Chargement...</Text>
+        <Loader />
       ) : (
         <Box
           w={{ base: "full", lg: "4xl" }}
           mx={{ base: 4, lg: "auto" }}
           py={{ base: 4, lg: 12 }}>
-          <Heading my={{ base: 4, lg: 8 }}>Tous nos campagnes</Heading>
+          <Heading my={{ base: 4, lg: 8 }}>Toutes nos campagnes</Heading>
           <TableContainer
             bg="gray.100"
             rounded="lg"
@@ -61,7 +61,6 @@ export default function Campaigns() {
                   <Th isNumeric>Montant</Th>
                   <Th isNumeric>Participation</Th>
                   <Th isNumeric>Bénéfice</Th>
-                  <Th>Produits</Th>
                   <Th>Actions</Th>
                 </Tr>
               </Thead>
@@ -73,7 +72,7 @@ export default function Campaigns() {
                     {campaigns.map((campaign, idx) => (
                       <Tr
                         key={idx}
-                        _hover={{ cursor: "pointer" }}
+                        _hover={{ cursor: "pointer", bg: "white" }}
                         onClick={() => navigate(`/campaigns/${campaign.id}`)}>
                         <Td isNumeric>{idx + 1}</Td>
                         <Td>{campaign.attributes.campaign}</Td>
@@ -131,7 +130,7 @@ export default function Campaigns() {
                               )
                             : "Vous ne participez pas"}
                         </Td>
-                        <Td>
+                        {/* <Td>
                           {campaign.attributes.products.data.map((product) => (
                             <Tag
                               mx={1}
@@ -144,7 +143,7 @@ export default function Campaigns() {
                               {product.attributes.name}
                             </Tag>
                           ))}
-                        </Td>
+                        </Td> */}
                         <Td>
                           <ButtonGroup>
                             <Tooltip

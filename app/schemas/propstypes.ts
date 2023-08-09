@@ -160,3 +160,39 @@ export interface IProduct {
 export type CampaignResponse = {
   data: ICampaignDetail;
 };
+
+export type CareerAttributes = {
+  career: string;
+  description: string;
+  isAvailable: boolean;
+  updatedAt: string;
+  requirements: string;
+  cover: {
+    data: IImage;
+  };
+  files: {
+    data: File[];
+  };
+};
+
+export type CareerType = {
+  id: number;
+  attributes: CareerAttributes;
+};
+
+export type GetCareersResponse = {
+  data: CareerType[];
+};
+
+export type GetCareerResponse = {
+  data: CareerType;
+};
+
+export type CareerRequest = {
+  fullName: string;
+  email: string;
+  phone: string;
+  career: number;
+  message: string;
+  gender: string;
+};

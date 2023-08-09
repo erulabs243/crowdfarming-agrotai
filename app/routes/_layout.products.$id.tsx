@@ -19,6 +19,7 @@ import {
 import { LoaderArgs, json, redirect } from "@remix-run/node";
 import { useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import { IconEye, IconQuestionMark, IconUserPlus } from "@tabler/icons-react";
+import { Loader } from "~/components";
 import { getProduct } from "~/models/product.server";
 import { getRegistrationsByProduct } from "~/models/registration.server";
 import {
@@ -52,7 +53,7 @@ export default function ShowProduct() {
   return (
     <Box>
       {state === "loading" ? (
-        <Text>Chargement...</Text>
+        <Loader />
       ) : (
         <Box
           w={{ base: "full", lg: "4xl" }}

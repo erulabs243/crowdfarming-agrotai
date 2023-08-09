@@ -26,6 +26,7 @@ import {
 import { LoaderArgs, json, redirect } from "@remix-run/node";
 import { useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import { IconUserPlus } from "@tabler/icons-react";
+import { Loader } from "~/components";
 import { getCampaign } from "~/models/campaign.server";
 import { ICampaignDetail } from "~/schemas/propstypes";
 import env from "~/services/environment.server";
@@ -57,17 +58,19 @@ export default function Campaign() {
   return (
     <Box>
       {state === "loading" ? (
-        <Text>Chargement...</Text>
+        <Loader />
       ) : (
         <Box
           w={{ base: "full", lg: "4xl" }}
           mx={{ base: 4, lg: "auto" }}
+          pr={{ base: 8, lg: 0 }}
           py={{ base: 4, lg: 12 }}>
           {/* Actions */}
           <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
+            mb={4}
+            direction={{ base: "column", lg: "row" }}
+            justifyContent={{ base: "flex-start", lg: "space-between" }}
+            alignItems={{ base: "flex-start", lg: "center" }}
             py={{ base: 4, lg: 12 }}>
             <Heading as="h1">{campaign.attributes.campaign}</Heading>
             {campaign.attributes.isActive && (
@@ -88,7 +91,7 @@ export default function Campaign() {
           {/* Stats */}
           <StatGroup
             gap={{ base: 4, lg: 8 }}
-            mb={{ base: 4, lg: 8 }}>
+            mb={8}>
             <Stat
               borderWidth={1}
               borderColor="gray.300"
@@ -139,7 +142,7 @@ export default function Campaign() {
 
           {/* Details */}
           <Stack
-            direction="row"
+            direction={{ base: "column", lg: "row" }}
             gap={{ base: 4, lg: 8 }}>
             <Card flex={1}>
               <CardBody>
@@ -147,8 +150,12 @@ export default function Campaign() {
                   src={`${data.host}${campaign.attributes.image.data.attributes.url}`}
                   alt={campaign.attributes.campaign}
                   rounded="lg"
+                  w="full"
+                  h={{ base: 56, lg: 72 }}
                   objectFit="cover"
                   objectPosition="center"
+                  bg="gray.100"
+                  rounded="lg"
                 />
                 <Stack
                   direction="column"
@@ -156,7 +163,8 @@ export default function Campaign() {
                   my={4}>
                   <Heading
                     as="h3"
-                    size="sm">
+                    size="md"
+                    fontWeight="bold">
                     {campaign.attributes.campaign}
                     <Tag
                       mx={2}
@@ -168,39 +176,63 @@ export default function Campaign() {
                       {campaign.attributes.isActive ? "En cours" : "A venir"}
                     </Tag>
                   </Heading>
-                  <Text>{campaign.attributes.description}</Text>
+                  <Text color="gray.600">
+                    {campaign.attributes.description}
+                  </Text>
                 </Stack>
-                <Stack direction="column">
-                  <Box>
-                    <Text>Commenc le</Text>
-                    <Text>
+                <Stack direction="row">
+                  <Box flex={1}>
+                    <Text
+                      fontSize="sm"
+                      color="gray.600">
+                      Commence le
+                    </Text>
+                    <Text fontWeight="bold">
                       {new Date(
                         campaign.attributes.startsAt
                       ).toLocaleDateString("fr-FR")}
                     </Text>
                   </Box>
-                  <Box>
-                    <Text>Se termine le</Text>
-                    <Text>
+                  <Box flex={1}>
+                    <Text
+                      fontSize="sm"
+                      color="gray.600"
+                      textAlign="right">
+                      Se termine le
+                    </Text>
+                    <Text
+                      fontWeight="bold"
+                      textAlign="right">
                       {new Date(campaign.attributes.endsAt).toLocaleDateString(
                         "fr-FR"
                       )}
                     </Text>
                   </Box>
                 </Stack>
+                <Text mt={4}>Lévée des fonds</Text>
                 <Stack direction="row">
-                  <Text>Lévée des fonds</Text>
-                  <Box>
-                    <Text>Commence le</Text>
-                    <Text>
+                  <Box flex={1}>
+                    <Text
+                      fontSize="sm"
+                      color="gray.600">
+                      Commence le
+                    </Text>
+                    <Text fontWeight="bold">
                       {new Date(
                         campaign.attributes.fundStartsAt
                       ).toLocaleDateString("fr-FR")}
                     </Text>
                   </Box>
-                  <Box>
-                    <Text>Se termine le</Text>
-                    <Text>
+                  <Box flex={1}>
+                    <Text
+                      fontSize="sm"
+                      color="gray.600"
+                      textAlign="right">
+                      Se termine le
+                    </Text>
+                    <Text
+                      fontWeight="bold"
+                      textAlign="right">
                       {new Date(
                         campaign.attributes.fundEndsAt
                       ).toLocaleDateString("fr-FR")}
@@ -211,7 +243,10 @@ export default function Campaign() {
             </Card>
 
             {/* Les produts */}
-            <Box flex={1}>
+            <Box
+              flex={1}
+              mx={2}
+              my={{ base: 4, lg: 0 }}>
               <Box mb={8}>
                 <Heading
                   as="h4"

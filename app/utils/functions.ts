@@ -10,7 +10,7 @@ export const aggregateRegistrations = ({
   status,
 }: {
   type: "mean" | "sum";
-  values: Registration[];
+  values: Registration[] | RegistrationWithCampaign[];
   status?: "pending" | "validated" | "rejected";
 }): number => {
   if (!Array.isArray(values)) return 0;
@@ -33,6 +33,25 @@ export const aggregateRegistrations = ({
     default:
       return sum;
   }
+};
+
+export const countRegistrations = ({
+  values,
+  status,
+}: {
+  values: Registration[] | RegistrationWithCampaign[];
+  status?: "pending" | "validated" | "rejected";
+}): number => {
+  if (!Array.isArray(values)) return 0;
+
+  let count = 0;
+  if (!status) count = values.length;
+  else
+    for (let registration of values) {
+      count = registration.attributes.status === status ? count + 1 : count;
+    }
+
+  return count;
 };
 
 export const showPercentage = (amount: number, total: number): string => {

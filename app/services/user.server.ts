@@ -1,6 +1,6 @@
 import { redirect } from "@remix-run/node";
 import axios from "axios";
-import { GetMeResponse } from "~/models/user.model";
+import { GetMeResponse, User } from "~/models/user.model";
 import { registrationType } from "~/schemas/forms/register";
 import env from "./environment.server";
 import { getJWTToken, getUserId, logout } from "./session.server";
@@ -8,6 +8,30 @@ import { getJWTToken, getUserId, logout } from "./session.server";
 export const getMe = async (jwt: string) => {
   try {
     const { data, status } = await axios.get<GetMeResponse>(
+      `${env.SERVER_HOST}/api/users/me?populate=*`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
+    if (status === 200) return data;
+
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const getMeFromRequest = async (request: Request) => {
+  const jwt = await getJWTToken(request);
+
+  try {
+    const { data, status } = await axios.get<User>(
       `${env.SERVER_HOST}/api/users/me?populate=*`,
       {
         headers: {

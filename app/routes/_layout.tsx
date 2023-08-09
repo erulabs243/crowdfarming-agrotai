@@ -5,7 +5,7 @@ import {
   Container,
   HStack,
   Icon,
-  Link,
+  Image,
   Menu,
   MenuButton,
   MenuGroup,
@@ -52,6 +52,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   await requireUserId(request);
 
   return json({
+    host: env.SERVER_HOST,
     siteTitle: env.SITE_TITLE,
   });
 };
@@ -77,11 +78,22 @@ export default function Layout() {
         maxW="full"
         py={2}>
         <HStack>
-          <Box>
-            <Link href="/">
-              <Text>{data.siteTitle}</Text>
-            </Link>
-          </Box>
+          <HStack
+            alignItems="center"
+            gap={2}>
+            <Image
+              src="/logo-icone.png"
+              w={6}
+            />
+            <Text
+              className="h1"
+              fontSize="xl"
+              textTransform="uppercase"
+              fontWeight={700}
+              color="green.700">
+              {data.siteTitle}
+            </Text>
+          </HStack>
 
           {/* Show menu on large screen */}
           <Show above="lg">
@@ -140,6 +152,17 @@ export default function Layout() {
                         Mes campagnes
                       </Button>
                     </MenuItem>
+                    {/* <MenuItem px={2}>
+                      <Button
+                        variant="ghost"
+                        w="full"
+                        size="sm"
+                        justifyContent="flex-start"
+                        leftIcon={<Icon as={IconWalk} />}
+                        onClick={() => navigate("/tours")}>
+                        Mes visites
+                      </Button>
+                    </MenuItem> */}
                     <MenuItem px={2}>
                       <Button
                         variant="ghost"
@@ -199,23 +222,69 @@ export default function Layout() {
                 <MenuList
                   px={4}
                   py={2}>
-                  {navbarLinks.map((link: NavbarLinksProps, idx: number) => (
-                    <MenuItem
-                      my={2}
-                      key={`${link.uri}-${idx}`}
-                      as={Button}
-                      variant={link.isButton ? "solid" : "ghost"}
-                      colorScheme={link.isButton ? "green" : "gray"}
-                      rounded="lg">
-                      <Link
-                        href={link.uri}
-                        flex={1}
-                        textAlign="right"
-                        _hover={{ textDecor: "none" }}>
-                        {link.label}
-                      </Link>
+                  <MenuGroup>
+                    <MenuItem px={2}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        w="full"
+                        justifyContent="flex-start"
+                        leftIcon={<Icon as={IconHome2} />}
+                        onClick={() => navigate(`/dashboard`)}>
+                        Tableau de bord
+                      </Button>
                     </MenuItem>
-                  ))}
+                    <MenuItem px={2}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        w="full"
+                        justifyContent="flex-start"
+                        leftIcon={<Icon as={IconTable} />}
+                        onClick={() => navigate(`/me/campaigns`)}>
+                        Mes campagnes
+                      </Button>
+                    </MenuItem>
+                    {/* <MenuItem px={2}>
+                      <Button
+                        variant="ghost"
+                        w="full"
+                        size="sm"
+                        justifyContent="flex-start"
+                        leftIcon={<Icon as={IconWalk} />}
+                        onClick={() => navigate("/tours")}>
+                        Mes visites
+                      </Button>
+                    </MenuItem> */}
+                    <MenuItem px={2}>
+                      <Button
+                        variant="ghost"
+                        w="full"
+                        size="sm"
+                        justifyContent="flex-start"
+                        leftIcon={<Icon as={IconUser} />}>
+                        Mon compte
+                      </Button>
+                    </MenuItem>
+                  </MenuGroup>
+                  <MenuGroup>
+                    <MenuItem px={2}>
+                      <Form
+                        action="/logout"
+                        method="post">
+                        <Button
+                          variant="ghost"
+                          w="full"
+                          colorScheme="red"
+                          size="sm"
+                          justifyContent="flex-start"
+                          leftIcon={<Icon as={IconLogout2} />}
+                          type="submit">
+                          Deconnexion
+                        </Button>
+                      </Form>
+                    </MenuItem>
+                  </MenuGroup>
                 </MenuList>
               </Menu>
             </Stack>
