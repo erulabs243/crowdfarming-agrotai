@@ -60,11 +60,13 @@ export default function Index() {
           <Stack
             direction="row"
             alignItems="center"
+            w="full"
+            justifyContent="center"
             _hover={{ textDecor: "none" }}>
             <Image
               src={`${data.host}/uploads/logo_comp2_f29790d4d6.png`}
               alt="Logo Agrotai"
-              w={60}
+              w={48}
             />
           </Stack>
         </Link>
@@ -78,19 +80,20 @@ export default function Index() {
           fontSize={{ base: "lg", lg: "2xl" }}
           color="gray.700"
           textAlign="center"
-          px={{ base: 2, lg: 8 }}>
+          px={{ base: 4, lg: 8 }}>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium
           ipsum illo, veniam esse omnis repellendus perferendis labore eius ab
           minima quas, vel nesciunt perspiciatis harum et neque ad deserunt
           laboriosam!
         </Text>
         <ButtonGroup
-          flexDir={{ base: "column", lg: "row" }}
+          flexDir={{ base: "column", md: "row" }}
           alignItems="center"
           justifyContent="center"
           gap={{ base: 4, lg: 8 }}
           my={8}>
           <Button
+            w={{ base: "full", md: "xs" }}
             variant="solid"
             colorScheme="green"
             size="lg"
@@ -99,6 +102,7 @@ export default function Index() {
             Se connecter
           </Button>
           <Button
+            w={{ base: "full", md: "xs" }}
             variant="outline"
             colorScheme="orange"
             size="lg"

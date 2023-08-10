@@ -103,22 +103,23 @@ export default function Register() {
       minH="100vh">
       <Stack
         as={Box}
-        direction="row"
+        direction={{ base: "column", md: "row" }}
         w={{ base: "full", lg: "5xl" }}
-        mx="auto"
+        mx={{ base: 4, lg: "auto" }}
         p={8}
         alignSelf="center"
         rounded="lg"
-        bg="gray.50">
+        bg="gray.50"
+        gap={8}>
         <Center flex={1}>
           <Image
             src={`${data.host}/uploads/logo_comp2_f29790d4d6.png`}
-            w={48}
+            w={{ base: 24, lg: 48 }}
           />
         </Center>
         <Box
-          w="50%"
-          px={{ base: 4, lg: 12 }}
+          w={{ base: "full", md: "60%", lg: "50%" }}
+          px={{ base: 8, lg: 12 }}
           rounded="lg"
           bg="gray.100">
           <FormHeading
@@ -260,19 +261,22 @@ export default function Register() {
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
               </FormControl>
               <Stack
-                direction="row"
+                my={4}
+                direction={{ base: "column", md: "row" }}
                 alignItems="center"
                 justifyContent="space-between">
                 <Button
                   type="submit"
                   isLoading={state === "submitting"}
-                  colorScheme="green">
+                  colorScheme="green"
+                  w="full">
                   Créer un compte
                 </Button>
-                <Text>ou</Text>
+                <Text mx={2}>ou</Text>
                 <Button
                   variant="outline"
                   colorScheme="gray"
+                  w="full"
                   onClick={() => navigate("/login")}>
                   Se connecter
                 </Button>

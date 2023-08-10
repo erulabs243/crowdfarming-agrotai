@@ -100,22 +100,23 @@ export default function Login() {
       minH="100vh">
       <Stack
         as={Box}
-        direction="row"
+        direction={{ base: "column", md: "row" }}
         w={{ base: "full", lg: "5xl" }}
-        mx="auto"
+        mx={{ base: 4, lg: "auto" }}
         p={8}
         alignSelf="center"
         rounded="lg"
-        bg="gray.50">
+        bg="gray.50"
+        gap={8}>
         <Center flex={1}>
           <Image
             src={`${data.host}/uploads/logo_comp2_f29790d4d6.png`}
-            w={48}
+            w={{ base: 24, lg: 48 }}
           />
         </Center>
         <Box
-          w="50%"
-          px={{ base: 4, lg: 12 }}
+          w={{ base: "full", md: "50%" }}
+          px={{ base: 8, lg: 12 }}
           rounded="lg"
           bg="gray.100">
           <FormHeading
@@ -175,20 +176,24 @@ export default function Login() {
                 Mot de passe oublié ?
               </Link>
               <Stack
-                direction="row"
+                mt={4}
+                mb={8}
+                direction={{ base: "column", md: "row" }}
                 alignItems="center"
                 justifyContent="space-between">
                 <Button
                   type="submit"
                   isLoading={state === "submitting"}
-                  colorScheme="green">
+                  colorScheme="green"
+                  w="full">
                   Se connecter
                 </Button>
-                <Text>ou</Text>
+                <Text mx={2}>ou</Text>
                 <Button
-                  my={4}
+                  my={{ base: 0, lg: 4 }}
                   variant="outline"
                   colorScheme="gray"
+                  w="full"
                   onClick={() => navigate("/register")}>
                   Créer un compte
                 </Button>
