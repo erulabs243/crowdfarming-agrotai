@@ -140,7 +140,7 @@ export default function Register() {
                 </Alert>
               )}
               <Stack
-                direction="row"
+                direction={{ base: "column", md: "row" }}
                 gap={4}>
                 <FormControl
                   my={2}
